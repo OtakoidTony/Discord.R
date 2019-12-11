@@ -8,7 +8,7 @@ getGatewayBot <- function(){
 
 sendMessage <- function(channel_id, message){
   key <- paste0("Bot ", token)
-  Url <- paste0(BaseUrl, "/v6/channels/")
+  Url <- paste0("https://discordapp.com/api/v6/channels/")
   Url <- paste0(Url, channel_id)
   Url <- paste0(Url, "/messages")
   body <- list(tts=FALSE, content=message)
