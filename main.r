@@ -25,7 +25,7 @@ getGatewayBot <- function(){
 # Message management | Send
 sendMessage <- function(channel_id, message){
   key <- paste0("Bot ", token)
-  Url <- paste0("https://discordapp.com/api/v6/channels/")
+  Url <- "https://discordapp.com/api/v6/channels/"
   Url <- paste0(Url, channel_id)
   Url <- paste0(Url, "/messages")
   body <- list(tts=FALSE, content=message)
@@ -35,7 +35,7 @@ sendMessage <- function(channel_id, message){
 
 getMessage <- function(channel_id){
   key <- paste0("Bot ", token)
-  Url <- paste0("https://discordapp.com/api/v6/channels/")
+  Url <- "https://discordapp.com/api/v6/channels/"
   Url <- paste0(Url, channel_id)
   Url <- paste0(Url, "/messages")
   r <- GET(Url, add_headers(Authorization=key))
@@ -44,9 +44,18 @@ getMessage <- function(channel_id){
 
 getChannel <- function(channel_id){
   key <- paste0("Bot ", token)
-  Url <- paste0("https://discordapp.com/api/v6/channels/")
+  Url <- "https://discordapp.com/api/v6/channels/"
   Url <- paste0(Url, channel_id)
   r <- GET(Url, add_headers(Authorization=key))
   return(r)
+}
+
+createGuildChannel <- function(guild_id, name){
+  key <- paste0("Bot ", token)
+  Url <- "https://discordapp.com/api/v6/guilds/"
+  Url <- paste0(Url, guild_id)
+  Url <- paste0(Url, "/channels")
+  body <- list(tts=FALSE, name=name)
+  r <- POST(Url, add_headers(Authorization=key), set_cookies(content(getGatewayBot())$cookies), body = body, encode = "json")
 }
 
