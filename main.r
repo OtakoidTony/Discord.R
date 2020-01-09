@@ -10,16 +10,25 @@ token <- "your token"
 # TODO: Server management  | Ban Ban_List Create Delete Edit Info Kick Unban Change_Owner
 # TODO: User management    | Voice_Move
 
+makeIdentifyProperties <- function(os, browser, device){
+  return(list('$os' = os, '$browser' = browser, '$device' = device))
+}
+
+makeIdentify <- function(token, properties = makeIdentifyProperties('windows', 'Discord.r', 'Discord.r')){
+  return(list(token = token, properties = properties))
+}
 
 # Get Gateway
 getGateway <- function(){
   r <- GET("https://discordapp.com/api/v6/gateway")
+  return(r)
 }
 
 # Get Gateway Bot
 getGatewayBot <- function(){
   key <- paste0("Bot ", token)
   r <- GET("https://discordapp.com/api/v6/gateway/bot", add_headers(Authorization=key))
+  return(r)
 }
 
 # Message management | Send
@@ -32,6 +41,14 @@ sendMessage <- function(channel_id, message){
   r <- POST(Url, add_headers(Authorization=key), set_cookies(content(getGatewayBot())$cookies), body = body, encode = "json")
   return(r)
 }
+
+ws <- WebSocket$new("ws://echo.websocket.org/", autoConnect = FALSE)
+
+ws <- WebSocket$new("wss://gateway.discord.gg/?v=6&encoding=json",
+                    headers = list(Cookie = "Xyz"),
+                    accessLogChannels = "all" # enable all websocketpp logging
+)
+
 
 getMessage <- function(channel_id){
   key <- paste0("Bot ", token)
