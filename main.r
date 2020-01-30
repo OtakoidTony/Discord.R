@@ -1,6 +1,7 @@
 BaseUrl <- "https://discordapp.com/api"
 token <- "your token"
 
+library(httr)
 
 # TODO: Channel management | Create Delete DM Edit History Info Permission
 # TODO: Edit Profile       | Edit_Profile
@@ -41,14 +42,6 @@ sendMessage <- function(channel_id, message){
   r <- POST(Url, add_headers(Authorization=key), set_cookies(content(getGatewayBot())$cookies), body = body, encode = "json")
   return(r)
 }
-
-ws <- WebSocket$new("ws://echo.websocket.org/", autoConnect = FALSE)
-
-ws <- WebSocket$new("wss://gateway.discord.gg/?v=6&encoding=json",
-                    headers = list(Cookie = "Xyz"),
-                    accessLogChannels = "all" # enable all websocketpp logging
-)
-
 
 getMessage <- function(channel_id){
   key <- paste0("Bot ", token)
